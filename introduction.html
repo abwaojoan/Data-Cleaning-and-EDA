@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Introduction - Data Cleaning &amp; EDA Tutorial</title>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="../index.html" class="site-title">Data Cleaning &amp; EDA Training</a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="introduction.html" class="active">Introduction</a></li>
+          <li><a href="missing-values.html">Missing Values</a></li>
+          <li><a href="duplicates.html">Duplicates</a></li>
+          <li><a href="types-formatting.html">Types &amp; Formatting</a></li>
+          <li><a href="outliers.html">Outliers</a></li>
+          <li><a href="tidy-data.html">Tidy Data</a></li>
+          <li><a href="eda.html">EDA</a></li>
+          <li><a href="best-practices.html">Best Practices</a></li>
+          <li><a href="references.html">References</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>1. Introduction to Data Cleaning and EDA</h2>
+      <p>
+        Real-world data is almost never ready for analysis. Missing entries, inconsistent formats,
+        duplicate records, and unexpected values are common. Data cleaning (also called data
+        wrangling or data preparation) turns raw data into a reliable table that supports sound
+        analysis and modelling.
+      </p>
+      <p>
+        Exploratory Data Analysis (EDA) is the process of understanding a dataset: its structure,
+        distributions, relationships and quality issues. EDA and cleaning form a loop. You explore
+        to find problems, clean to fix them, then explore again to confirm the fixes and discover
+        new patterns.
+      </p>
+
+      <h3>Why this matters</h3>
+      <ul>
+        <li>Garbage in, garbage out: models and statistics inherit the quality of the input data.</li>
+        <li>Most of a data project is spent on preparation, often 60 to 80 percent of the effort.</li>
+        <li>Documented, repeatable cleaning protects you from silent bias and makes work reproducible.</li>
+      </ul>
+
+      <h3>A practical workflow</h3>
+      <ol>
+        <li><strong>Ingest and inspect</strong>: load the data, check shape, types, sample rows and basic counts.</li>
+        <li><strong>Identify issues</strong>: missing values, duplicates, wrong types, outliers, inconsistent labels.</li>
+        <li><strong>Plan transformations</strong>: decide whether to drop, impute, correct or flag. Record the reason.</li>
+        <li><strong>Apply and verify</strong>: run the changes and check that row counts and key totals still make sense.</li>
+        <li><strong>Explore</strong>: summarise, visualise and study relationships on the cleaned data.</li>
+      </ol>
+
+      <div class="callout callout-tip">
+        <strong>Tip</strong>
+        Always keep an untouched copy of the raw data. Work on a copy or in a pipeline that starts
+        from the original file every time.
+      </div>
+
+      <h3>Quick start with pandas</h3>
+<pre><code>import pandas as pd
+
+# Load data
+df = pd.read_csv("data.csv")
+
+# First look
+print(df.shape)
+print(df.head())
+print(df.info())
+print(df.describe(include="all"))
+print(df.isnull().sum())
+print(df.duplicated().sum())
+</code></pre>
+      <p>
+        These few commands give you structure, types, missingness, basic statistics and exact
+        duplicate counts. They form the starting point for every later step in this tutorial.
+      </p>
+    </section>
+
+    <div class="page-nav">
+      <a href="../index.html">&larr; Home</a>
+      <a href="missing-values.html">Missing Values &rarr;</a>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p>Data Cleaning &amp; EDA Training Material &middot; Joan Abwao &amp; Simon Wepukhulu &middot; 1 October 2026</p>
+  </footer>
+  <script src="../js/main.js"></script>
+</body>
+</html>

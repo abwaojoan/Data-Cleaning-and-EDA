@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Types &amp; Formatting - Data Cleaning &amp; EDA Tutorial</title>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="../index.html" class="site-title">Data Cleaning &amp; EDA Training</a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="introduction.html">Introduction</a></li>
+          <li><a href="missing-values.html">Missing Values</a></li>
+          <li><a href="duplicates.html">Duplicates</a></li>
+          <li><a href="types-formatting.html" class="active">Types &amp; Formatting</a></li>
+          <li><a href="outliers.html">Outliers</a></li>
+          <li><a href="tidy-data.html">Tidy Data</a></li>
+          <li><a href="eda.html">EDA</a></li>
+          <li><a href="best-practices.html">Best Practices</a></li>
+          <li><a href="references.html">References</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>4. Data Types, Formatting and Standardization</h2>
+      <p>
+        Correct data types enable proper calculations and reduce memory use. Inconsistent text,
+        mixed date formats and numbers stored as strings are common sources of silent errors.
+      </p>
+
+      <h3>Inspect and convert types</h3>
+<pre><code>print(df.dtypes)
+
+# Convert numeric columns that were read as object
+df["amount"] = pd.to_numeric(df["amount"], errors="coerce")
+
+# Convert dates
+df["join_date"] = pd.to_datetime(df["join_date"], errors="coerce", dayfirst=False)
+
+# Category for low-cardinality strings (saves memory and helps modelling)
+df["department"] = df["department"].astype("category")
+</code></pre>
+
+      <h3>Clean column names</h3>
+<pre><code>df.columns = (
+    df.columns
+    .str.strip()
+    .str.lower()
+    .str.replace(r"\s+", "_", regex=True)
+    .str.replace(r"[^\w]", "", regex=True)
+)
+</code></pre>
+
+      <h3>Standardise text</h3>
+<pre><code># Lowercase, strip, collapse spaces
+df["city"] = (
+    df["city"]
+    .str.lower()
+    .str.strip()
+    .str.replace(r"\s+", " ", regex=True)
+)
+
+# Map inconsistent categories
+status_map = {
+    "active": "Active",
+    "ACTIVE": "Active",
+    "act": "Active",
+    "inactive": "Inactive",
+    "INACT": "Inactive"
+}
+df["status"] = df["status"].str.strip().str.lower().map(status_map).fillna(df["status"])
+</code></pre>
+
+      <h3>Parse mixed formats</h3>
+      <p>
+        Dates or currencies often arrive in several formats. Use <code>pd.to_datetime</code> with
+        <code>errors="coerce"</code> and inspect the resulting NaT values. For currency, strip symbols
+        and convert to numeric.
+      </p>
+<pre><code># Example: clean currency strings
+df["spend"] = (
+    df["spend"]
+    .astype(str)
+    .str.replace(r"[$,]", "", regex=True)
+    .str.strip()
+)
+df["spend"] = pd.to_numeric(df["spend"], errors="coerce")
+</code></pre>
+
+      <div class="callout callout-tip">
+        <strong>Tip</strong>
+        After every conversion, re-check <code>df.info()</code> and look at rows that became NaN or NaT.
+        Those rows often hide the remaining format problems.
+      </div>
+    </section>
+
+    <div class="page-nav">
+      <a href="duplicates.html">&larr; Duplicates</a>
+      <a href="outliers.html">Outliers &rarr;</a>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p>Data Cleaning &amp; EDA Training Material &middot; Joan Abwao &amp; Simon Wepukhulu &middot; 1 October 2026</p>
+  </footer>
+  <script src="../js/main.js"></script>
+</body>
+</html>
