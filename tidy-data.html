@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tidy Data - Data Cleaning &amp; EDA Tutorial</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="site-title">Data Cleaning &amp; EDA Training</a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="introduction.html">Introduction</a></li>
+          <li><a href="missing-values.html">Missing Values</a></li>
+          <li><a href="duplicates.html">Duplicates</a></li>
+          <li><a href="types-formatting.html">Types &amp; Formatting</a></li>
+          <li><a href="outliers.html">Outliers</a></li>
+          <li><a href="tidy-data.html" class="active">Tidy Data</a></li>
+          <li><a href="eda.html">EDA</a></li>
+          <li><a href="best-practices.html">Best Practices</a></li>
+          <li><a href="references.html">References</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>6. Tidy Data Principles</h2>
+      <p>
+        Tidy data, formalised by Hadley Wickham, is a standard way to structure tables so that
+        analysis tools work consistently. A tidy dataset has three properties:
+      </p>
+      <ol>
+        <li>Each variable forms a column.</li>
+        <li>Each observation forms a row.</li>
+        <li>Each type of observational unit forms a table.</li>
+      </ol>
+      <p>
+        Messy data often violates these rules: column headers contain values, multiple variables
+        sit in one column, or different entities are mixed in the same table.
+      </p>
+
+      <h3>Common messiness and fixes (pandas)</h3>
+      <h3>Column headers are values</h3>
+<pre><code># Wide format: years as columns
+# id | 2020 | 2021 | 2022
+#  a |  10  |  12  |  15
+
+tidy = df.melt(
+    id_vars=["id"],
+    var_name="year",
+    value_name="value"
+)
+# Result: id | year | value
+</code></pre>
+
+      <h3>Multiple variables in one column</h3>
+<pre><code># Example: "male_10" style labels
+df[["sex", "age_group"]] = df["group"].str.split("_", expand=True)
+</code></pre>
+
+      <h3>Variables stored in both rows and columns</h3>
+      <p>
+        Use a combination of melt and pivot (or pivot_table) to rearrange until each variable
+        is its own column and each observation is a single row.
+      </p>
+
+      <div class="callout callout-info">
+        <strong>Why tidy data helps</strong>
+        Most visualisation and modelling functions expect one observation per row and one
+        variable per column. Once data is tidy, the same small set of tools works for almost
+        every subsequent step.
+      </div>
+
+      <p>
+        For a full treatment see Wickham (2014), "Tidy Data", Journal of Statistical Software
+        (linked on the References page).
+      </p>
+    </section>
+
+    <div class="page-nav">
+      <a href="outliers.html">&larr; Outliers</a>
+      <a href="eda.html">EDA &rarr;</a>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p>Data Cleaning &amp; EDA Training Material &middot; Joan Abwao &amp; Simon Wepukhulu &middot; 1 October 2026</p>
+  </footer>
+  <script src="main.js"></script>
+</body>
+</html>

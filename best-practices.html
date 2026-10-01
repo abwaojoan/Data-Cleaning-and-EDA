@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Best Practices - Data Cleaning &amp; EDA Tutorial</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="site-title">Data Cleaning &amp; EDA Training</a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="introduction.html">Introduction</a></li>
+          <li><a href="missing-values.html">Missing Values</a></li>
+          <li><a href="duplicates.html">Duplicates</a></li>
+          <li><a href="types-formatting.html">Types &amp; Formatting</a></li>
+          <li><a href="outliers.html">Outliers</a></li>
+          <li><a href="tidy-data.html">Tidy Data</a></li>
+          <li><a href="eda.html">EDA</a></li>
+          <li><a href="best-practices.html" class="active">Best Practices</a></li>
+          <li><a href="references.html">References</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>8. Best Practices and Workflow Checklist</h2>
+      <p>
+        Good cleaning is systematic, documented and reversible. Use the interactive checklist
+        below to track your progress on a real project. Progress is saved in your browser.
+      </p>
+
+      <div class="progress-wrap">
+        <p class="progress-label">0 of 12 completed (0%)</p>
+        <div class="progress-bar"><div class="progress-fill"></div></div>
+      </div>
+
+      <ul class="checklist" data-id="workflow">
+        <li>
+          <input type="checkbox" id="c1">
+          <label for="c1">Keep an untouched copy of the raw data (or read it only once at the start of a script).</label>
+        </li>
+        <li>
+          <input type="checkbox" id="c2">
+          <label for="c2">Record the business question and expected ranges or valid values before opening the file.</label>
+        </li>
+        <li>
+          <input type="checkbox" id="c3">
+          <label for="c3">Inspect shape, dtypes, head/tail, describe, null counts and duplicate counts.</label>
+        </li>
+        <li>
+          <input type="checkbox" id="c4">
+          <label for="c4">Clean column names and convert data types early.</label>
+        </li>
+        <li>
+          <input type="checkbox" id="c5">
+          <label for="c5">Handle missing values with a clear rule (drop, impute, or flag) and document it.</label>
+        </li>
+        <li>
+          <input type="checkbox" id="c6">
+          <label for="c6">Remove or flag exact and key-based duplicates after standardising text.</label>
+        </li>
+        <li>
+          <input type="checkbox" id="c7">
+          <label for="c7">Investigate outliers; correct, cap or remove only with justification.</label>
+        </li>
+        <li>
+          <input type="checkbox" id="c8">
+          <label for="c8">Reshape data into tidy form (one variable per column, one observation per row).</label>
+        </li>
+        <li>
+          <input type="checkbox" id="c9">
+          <label for="c9">Re-run basic EDA after cleaning to confirm distributions still make sense.</label>
+        </li>
+        <li>
+          <input type="checkbox" id="c10">
+          <label for="c10">Write comments or a short log for every non-obvious transformation.</label>
+        </li>
+        <li>
+          <input type="checkbox" id="c11">
+          <label for="c11">Verify row counts and key aggregates before and after major steps.</label>
+        </li>
+        <li>
+          <input type="checkbox" id="c12">
+          <label for="c12">Save the cleaned dataset and the cleaning script so the work is reproducible.</label>
+        </li>
+      </ul>
+
+      <h3>Additional habits</h3>
+      <ul>
+        <li>Prefer scripts or notebooks that start from the raw file every time over manual spreadsheet edits.</li>
+        <li>Prefer median over mean for skewed numeric imputation.</li>
+        <li>Prefer explicit maps for category cleaning over silent string replacements.</li>
+        <li>When in doubt, flag suspicious rows instead of deleting them permanently.</li>
+      </ul>
+    </section>
+
+    <div class="page-nav">
+      <a href="eda.html">&larr; EDA</a>
+      <a href="references.html">References &rarr;</a>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p>Data Cleaning &amp; EDA Training Material &middot; Joan Abwao &amp; Simon Wepukhulu &middot; 1 October 2026</p>
+  </footer>
+  <script src="main.js"></script>
+</body>
+</html>

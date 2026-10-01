@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Missing Values - Data Cleaning &amp; EDA Tutorial</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="site-title">Data Cleaning &amp; EDA Training</a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="introduction.html">Introduction</a></li>
+          <li><a href="missing-values.html" class="active">Missing Values</a></li>
+          <li><a href="duplicates.html">Duplicates</a></li>
+          <li><a href="types-formatting.html">Types &amp; Formatting</a></li>
+          <li><a href="outliers.html">Outliers</a></li>
+          <li><a href="tidy-data.html">Tidy Data</a></li>
+          <li><a href="eda.html">EDA</a></li>
+          <li><a href="best-practices.html">Best Practices</a></li>
+          <li><a href="references.html">References</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>2. Handling Missing Values</h2>
+      <p>
+        Missing values appear as NaN, None, empty strings, or sentinel codes such as -999 or "N/A".
+        How you treat them depends on why they are missing and how much is missing.
+      </p>
+
+      <h3>Types of missingness</h3>
+      <ul>
+        <li><strong>MCAR</strong> (Missing Completely at Random): no systematic reason. Imputation is relatively safe.</li>
+        <li><strong>MAR</strong> (Missing at Random): missingness depends on other observed variables. Model-based methods help.</li>
+        <li><strong>MNAR</strong> (Missing Not at Random): missingness depends on the unobserved value itself. Requires domain knowledge or extra data.</li>
+      </ul>
+
+      <h3>Inspect first</h3>
+<pre><code># Count missing values
+print(df.isnull().sum())
+print((df.isnull().mean() * 100).round(2))  # percentage
+
+# Visual overview (optional)
+import seaborn as sns
+import matplotlib.pyplot as plt
+sns.heatmap(df.isnull(), cbar=False, yticklabels=False, cmap="viridis")
+plt.title("Missing values heatmap")
+plt.show()
+</code></pre>
+
+      <h3>Common strategies</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Strategy</th>
+            <th>When to use</th>
+            <th>pandas example</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Drop rows</td>
+            <td>Few missing rows and no critical bias</td>
+            <td><code>df.dropna(subset=["key_col"])</code></td>
+          </tr>
+          <tr>
+            <td>Drop columns</td>
+            <td>More than ~50% missing and low value</td>
+            <td><code>df = df.loc[:, df.isnull().mean() &lt; 0.5]</code></td>
+          </tr>
+          <tr>
+            <td>Fill with median / mode</td>
+            <td>Numeric (median) or categorical (mode), roughly MCAR</td>
+            <td><code>df["age"].fillna(df["age"].median())</code></td>
+          </tr>
+          <tr>
+            <td>Forward / backward fill</td>
+            <td>Time series or ordered data</td>
+            <td><code>df["val"].ffill()</code></td>
+          </tr>
+          <tr>
+            <td>Indicator flag</td>
+            <td>Missingness itself is informative</td>
+            <td><code>df["age_missing"] = df["age"].isnull()</code></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-warn">
+        <strong>Caution</strong>
+        Filling with the mean can distort skewed distributions. Prefer the median for numeric
+        columns that are not symmetric. Never fill without checking the pattern of missingness.
+      </div>
+
+      <h3>Worked example</h3>
+<pre><code># Drop rows where critical ID is missing
+df = df.dropna(subset=["customer_id"])
+
+# Drop columns with more than 50% missing
+df = df.loc[:, df.isnull().mean() &lt; 0.5]
+
+# Impute numeric with median, categorical with mode
+for col in df.select_dtypes(include="number").columns:
+    df[col] = df[col].fillna(df[col].median())
+
+for col in df.select_dtypes(include="object").columns:
+    mode_val = df[col].mode()
+    if not mode_val.empty:
+        df[col] = df[col].fillna(mode_val[0])
+    else:
+        df[col] = df[col].fillna("Unknown")
+
+print("Remaining nulls:", df.isnull().sum().sum())
+</code></pre>
+    </section>
+
+    <div class="page-nav">
+      <a href="introduction.html">&larr; Introduction</a>
+      <a href="duplicates.html">Duplicates &rarr;</a>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p>Data Cleaning &amp; EDA Training Material &middot; Joan Abwao &amp; Simon Wepukhulu &middot; 1 October 2026</p>
+  </footer>
+  <script src="main.js"></script>
+</body>
+</html>
